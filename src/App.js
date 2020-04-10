@@ -1,32 +1,26 @@
 import React from 'react';
-import './App.css';
-
-import appTheme from './themes/ThemeProvider';
-import { ThemeProvider } from '@material-ui/core';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Link from '@material-ui/core/Link';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import MailIcon from '@material-ui/icons/Mail';
-import HomeIcon from '@material-ui/icons/Home';
-import GitHub from '@material-ui/icons/GitHub';
-import LinkedIn from '@material-ui/icons/LinkedIn';
-import { Link, Grid } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Main from './components/main';
+import { Link as RouterLink } from 'react-router-dom';
+
+import DrawerData from './data/DrawerData';
 
 const drawerWidth = 240;
 
@@ -34,227 +28,139 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
   },
 }));
 
-export default function AppDrawer() {
+function ResponsiveDrawer(props) {
+  const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const drawer = (
+    <div>
+      <div className={classes.toolbar} />
+      <Divider />
+      <List>
+        {Object.keys(DrawerData.menu).map(menu => (
+          <Link component={RouterLink} to={DrawerData.menu[menu].route} color='inherit'>
+            <ListItem button key={menu}>
+              <ListItemIcon> {React.createElement(DrawerData.menu[menu].icon)} </ListItemIcon>
+              <ListItemText primary={menu} />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {Object.keys(DrawerData.social).map(menu => (
+          <Link href={DrawerData.social[menu].route} color='inherit' target='_blank' rel='noopener'>
+            <ListItem button key={menu}>
+              <ListItemIcon> {React.createElement(DrawerData.social[menu].icon)} </ListItemIcon>
+              <ListItemText primary={menu} />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+    </div>
+  );
 
   return (
-    <ThemeProvider theme={appTheme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              className={clsx(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Grid
-              container
-              justify='flex-start'
-              direction='row'
-              alignItems='flex-start'
-              spacing="1"
-              >
-                  <Link component={RouterLink} to='/' color='inherit'>
-                    <Typography variant='h7' color='primary.light'>Mayur Kumar</Typography>
-                  </Link>
-              </Grid>
-
-            <Grid
-              container
-              justify='space-around'
-              alignContent='space-around'
-              direction='row'
-              alignItems='flex-start'
-              spacing="6"
-              >
-                  <Link component={RouterLink} color='inherit' to='/about'>
-                    <Typography variant='h7' color='primary.light'>About Me</Typography>
-                    <Divider color='primary.light' orientation="vertical" />
-                  </Link>
-
-                  <Link component={RouterLink} color='inherit' to='/experience'>
-                    <Typography variant='h7' color='primary.light'>Experience</Typography>
-                    <Divider color='primary.light' orientation="vertical" />
-                  </Link>
-
-                  <Link component={RouterLink} color='inherit' to='/resume'>
-                    <Typography variant='h7' color='primary.light'>Resume</Typography>
-                    <Divider color='primary.light' orientation="vertical" />
-                  </Link>
-
-                  <Link component={RouterLink} color='inherit' to='/about'>
-                    <Typography variant='h7' color='primary.light'>Contact Me</Typography>
-                  </Link>
-                  
-              </Grid>
-          </Toolbar>
-        </AppBar>
-
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-              <Link component={RouterLink} to='/about'>
-                <ListItem>
-                    <ListItemIcon><HomeIcon /></ListItemIcon>
-                    <ListItemText primary='About Me'></ListItemText>
-                </ListItem>
-              </Link>
-
-              <Link component={RouterLink} to='/experience'>
-                <ListItem>
-                    <ListItemIcon><AssignmentIcon /></ListItemIcon>
-                    <ListItemText primary='Experience'></ListItemText>
-                </ListItem>
-              </Link>
-
-              <Link component={RouterLink} to='/resume'>
-                <ListItem>
-                    <ListItemIcon><AssignmentIcon /></ListItemIcon>
-                    <ListItemText primary='Resume'></ListItemText>
-                </ListItem>
-              </Link>
-
-              <Link component={RouterLink} to='/about'>
-                <ListItem>
-                    <ListItemIcon><MailIcon /></ListItemIcon>
-                    <ListItemText primary='Contact Me'></ListItemText>
-                </ListItem>
-              </Link>
-          </List>
-          <Divider />
-          <Divider />
-          <List>
-              <Link href='https://www.linkedin.com/in/mayur-kumar-03/' color='inherit' target='_blank' rel='noopener'>
-                  <ListItem>
-                      <ListItemIcon><LinkedIn /></ListItemIcon>
-                      <ListItemText primary='LinkedIn'></ListItemText>
-                  </ListItem>
-              </Link>
-              <Link href='https://github.com/auto-device-grid/auto-device-grid' color='inherit' target='_blank' rel='noopener'>
-                  <ListItem>
-                      <ListItemIcon><GitHub /></ListItemIcon>
-                      <ListItemText primary='GitHub'></ListItemText>
-                  </ListItem>
-              </Link>
-          </List>
-          <Divider />
-        </Drawer>
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          <Main />
-        </main>
-      </div>
-    </ThemeProvider>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Link component={RouterLink} color='inherit' to='/'>
+            <Typography variant="h6" noWrap>
+              Mayur Kumar
+            </Typography>
+          </Link>
+        </Toolbar>
+      </AppBar>
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Main />
+      </main>
+    </div>
   );
 }
 
+ResponsiveDrawer.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  container: PropTypes.any,
+};
 
-// class App extends Component{
-//   render(){
-//     const classes = useStyles();
-    
-//     return (
-//       <ThemeProvider theme={theme}>
-//         <div>
-//           <NavBar />
-//           <main className={classes.content}>
-//             <div className={classes.toolbar} />
-//               <Main />
-//           </main>
-//         </div>
-//       </ThemeProvider>
-//     );
-//   }
-// }
-
-// export default App;
+export default ResponsiveDrawer;

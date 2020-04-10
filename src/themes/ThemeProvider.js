@@ -1,6 +1,14 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
+  typography: {
+    homePage: {
+      fontFamily: '"Segoe UI"',
+      fontWeight: 'fontWeightBold',
+      fintSize: 'h4.fintSize',
+      fontStyle: 'oblique',
+    }
+  },
   palette: {
     primary: {
       light: '#757ce8',

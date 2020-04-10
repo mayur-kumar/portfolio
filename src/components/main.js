@@ -8,13 +8,16 @@ import ExperiencePage from './Experience';
 import ResumePage from './Resume';
 
 const Main = () => (
-    <Switch>
-        <Route exact path='/' component={LandingPage} />
-        <Route path='/about' component={AboutPage} />
-        <Route path='/contactme' component={ContactPage} />
-        <Route path='/experience' component={ExperiencePage} />
-        <Route path='/resume' component={ResumePage} />
-    </Switch>
+    <React.Fragment>
+      {/* <CssBaseline /> */}
+        <Switch>
+          <Route exact path='/' component={LandingPage} />
+          <Route path='/about' component={AboutPage} />
+          <Route path='/contactme' component={ContactPage} />
+          <Route path='/experience' component={ExperiencePage} />
+          <Route path='/resume' component={ResumePage} />
+        </Switch>
+    </React.Fragment>
 )
 
 export default Main;
