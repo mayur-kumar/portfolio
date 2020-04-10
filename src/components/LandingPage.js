@@ -1,88 +1,143 @@
-import React from 'react'
-import Grow from '@material-ui/core/Grow';
-import { Box, Typography, makeStyles, CssBaseline } from '@material-ui/core';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import avatar from './../profilePic.png';
+import { Chip, Box } from '@material-ui/core';
 
-import avatar from '../profilePic.png'
+const useStyles = makeStyles((theme) => ({
+	root: {
+		borderRadius: '5',
+		border: '2px solid #fff',
+	},
+	media: {
+		display: 'flex',
+		width: '100%',
+		height: '35vh',
+		zIndex: 0,
+		borderRight: '-2',
+		maxHeight: '30%',
+		clipPath: 'polygon(0 0, 100% 0%, 100% 84%, 0% 100%)',
+	},
+	expand: {
+		transform: 'rotate(0deg)',
+		marginLeft: 'auto',
+		transition: theme.transitions.create('transform', {
+			duration: theme.transitions.duration.shortest,
+		}),
+	},
+	expandOpen: {
+		transform: 'rotate(180deg)',
+	},
+	avatar: {
+		width: 150,
+		height: 150,
+		border: '2px solid #fff',
+		margin: '-100px 46px 0 auto',
+		'& > img': {
+			margin: 0,
+		},
+	},
+	skills: {
+		display: 'flex',
+		justifyContent: 'center',
+		flexWrap: 'wrap',
+		padding: theme.spacing(1),
+		margin: '20px 0 0 auto',
+	 },
+	 chip: {
+		margin: theme.spacing(1.5),
+	 },
+}));
 
-const elementsToTransition = [
-  'Hire Me, because:',
-  'I Build,',
-  'I Break,',
-  'I Test,',
-  '& I Deploy.'
-]
-const timeIncreament = 1000
+export default function RecipeReviewCard() {
+	const classes = useStyles();
+	const [expanded, setExpanded] = React.useState(false);
+	const [keySkills] = React.useState([
+		{ key: 0, label: 'Ansible' },
+		{ key: 1, label: 'Docker' },
+		{ key: 2, label: 'Kubernetes' },
+		{ key: 3, label: 'Jenkins' },
+		{ key: 4, label: 'PortWorx' },
+		{ key: 5, label: 'WebDriverIO' },
+		{ key: 6, label: 'Slenium' },
+		{ key: 7, label: 'Java' },
+		{ key: 8, label: 'Groovy' },
+		{ key: 9, label: 'JavaScript' },
+		{ key: 10, label: 'NodeJS' },
+	 ]);
 
-let waitTime = 0
+	const handleExpandClick = () => {
+		setExpanded(!expanded);
+	};
+	return (
+		<Card className={classes.root}>
+			<CardMedia className={classes.media}
+				image='https://unsplash.com/photos/f77Bh3inUpE/download?force=true&w=1920'
+			/>
+			<Avatar className={classes.avatar} src={avatar} />
+			<CardContent>
+				<Typography gutterBottom variant="h5" component="h2">
+					DevOps Engineer
+				</Typography>
+				<Typography gutterBottom variant="h7" component="h3">
+					at Lloyds Banking Group, London, United Kingdom
+				</Typography>
+				<Typography variant="body2" color="textSecondary" component="p">
+					I am working with Lloyds Banking Group, as a contractor from Wipro Technologies, India, for the past
+					2 years.
+				</Typography>
+				
+				<Box className={classes.skills} >
+					{keySkills.map(skill => (
+							<Chip
+							key={skill.key}
+						//  icon={icon}
+							label={skill.label}
+							className={classes.chip}
+						/>
+					))}
+				</Box>
+				
+			</CardContent>
+			
+			<CardActions disableSpacing>
+			<Typography gutterBottom variant="h5" component="h2">About Me</Typography>
+			<IconButton
+				className={clsx(classes.expand, {
+					[classes.expandOpen]: expanded,
+				})}
+				onClick={handleExpandClick}
+				aria-expanded={expanded}
+				aria-label="show more"
+			>
+			<ExpandMoreIcon />
+			</IconButton>
+			</CardActions>
+			<Collapse in={expanded} timeout="auto" unmountOnExit>
+				<CardContent>
+				<Typography variant="body2" color="textSecondary" component="p">
+					Experienced Software Development Engineer in Test (SDET)
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    justifyContent: 'center'
-  },
-  avatar: {
-    width: theme.spacing(22),
-    height: theme.spacing(22),
-    zIndex: 1,
-  },
-  cover: {
-    display: 'flex',
-    width: '100%',
-    height: '45vh',
-    backgroundImage: 'url(https://unsplash.com/photos/f77Bh3inUpE/download?force=true&w=1920)',
-    justifyContent: 'center',
-    zIndex: 0,
-    alignItems: 'flex-end',
-  }
-}))
+					I have an insightful knowledge functional testing tools like Appium, Selenium, Perfecto, SeeTest, TOSCA, UFT.
 
-function LandingPageBackdrop() {
-  const classes = useStyles()
-  return(
-    <React.Fragment>
-      <CssBaseline />
-      <div className={classes.cover}>
-        <Avatar alt="Mayur Kumar" component='div' src={avatar} pt={70} className={classes.avatar} />
-      </div>
-    </React.Fragment>
-    
-  )
+					I have:
+					Knowledge of NodeJS, Java and Groovy and have developed test aiding tools, such as test data service, auto-device grid and automation frameworks.
+					I have experience in developing and maintaining CI/CD pipelines for test automation with Jenkins and deployement of services with Dockers and Gitlab runner.
+					I have experince in developing test tool and platform agnostic automation frameworks for functional mobile and web testing.
+					Designed, developed and managed automated test projects for functional, integration, and regression testing of all the applications.
+					Provided the effort estimations and resourcing for projects. 
+				</ Typography>	
+				</CardContent>
+				</Collapse>
+		</Card>
+	);
 }
-
-class LaundingPage extends React.Component {
-  
-  state = { message: '', showMessage: true }
-
-  componentDidMount() {
-    elementsToTransition.forEach(element => {
-      waitTime += timeIncreament
-      setTimeout(() => {
-        this.setState({message: element, showMessage: true})
-      }, waitTime);
-    });
-  }
-  
-  render() {
-    return(
-      <div>
-        <LandingPageBackdrop />
-
-          <Grow direction="up" in={this.state.showMessage}>
-            <Box display="flex" justifyContent="center" pt={-5}>
-              <Typography component='div'>
-                <Box fontFamily='"Helvetica Neue"' fontWeight='fontWeightBold' fontSize={40} fontStyle='oblique'>
-                  {this.state.message}
-                </Box>
-              </Typography>
-            </Box>
-          </Grow>
-      </div>
-    );
-  };
-};
-
-export default LaundingPage
