@@ -4,6 +4,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import DescriptionIcon from '@material-ui/icons/Description';
 import GitHub from '@material-ui/icons/GitHub';
 import LinkedIn from '@material-ui/icons/LinkedIn';
+import InstagramIcon from '@material-ui/icons/Instagram';
 
 const DrawerData = {
     menu: {
@@ -32,6 +33,14 @@ const DrawerData = {
         LinkedIn: {
             route: 'https://www.linkedin.com/in/mayur-kumar-03/',
             icon: LinkedIn
+        },
+        'Auto-device-grid': {
+            route: 'https://github.com/mayur-kumar',
+            icon: GitHub
+        },
+        Instagram: {
+            route: 'https://www.instagram.com/mayur.kumar003/',
+            icon: InstagramIcon
         }
     }
 }
