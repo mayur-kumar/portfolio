@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, Card, Box, Typography, Grid, Paper } from '@material-ui/core'
+import { makeStyles, Card, Box, Typography, Grid } from '@material-ui/core'
 import CardContent from '@material-ui/core/CardContent'
 import experience from '../data/ExperienceData'
 
@@ -48,7 +48,11 @@ export default function Experience(){
                                         {project.location}
                                     </Typography>
                                     <Typography variant='body2' component='p' className={classes.projectDescription}>
-                                        {project.description}
+                                       <ul>
+                                       {project.description.map(d => (
+                                           <li>{d}</li>
+                                       ))}
+                                       </ul>
                                     </Typography>
                                 </Grid>
                             </Grid>

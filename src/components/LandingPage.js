@@ -125,16 +125,16 @@ export default function RecipeReviewCard() {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent>
 				<Typography variant="body2" color="textSecondary" component="p">
-					Experienced Software Development Engineer in Test (SDET)
-
-					I have an insightful knowledge functional testing tools like Appium, Selenium, Perfecto, SeeTest, TOSCA, UFT.
-
-					I have:
-					Knowledge of NodeJS, Java and Groovy and have developed test aiding tools, such as test data service, auto-device grid and automation frameworks.
-					I have experience in developing and maintaining CI/CD pipelines for test automation with Jenkins and deployement of services with Dockers and Gitlab runner.
-					I have experince in developing test tool and platform agnostic automation frameworks for functional mobile and web testing.
-					Designed, developed and managed automated test projects for functional, integration, and regression testing of all the applications.
-					Provided the effort estimations and resourcing for projects. 
+					DevOps engineer with an experience of 5 years focusing on cloud and automation of application
+					development along with a broad set of technical skills. Extensive experience in managing Cloud and
+					On-Prem infrastructure, software development, process automation, test automation and route to live. I bring
+					an engineering culture that is tailored towards Continuous Delivery. I have a strong development and
+					automation background with multiple languages and tools.
+					Experience in CI/CD pipeline, Jenkins, Docker, Nexus, Git, Ansible, Kubernetes, Terraform, GitOps with
+					Fleet, Rancher, Linux, ReactJS, ExpressJS, NodeJS, Selenium, Appium, Computer Networking.
+					Developing frameworks, middleware, APIs, reporting systems, dashboards, for process automation which
+					can help to ship applications faster to market with minimal manual intervention.
+ 
 				</ Typography>	
 				</CardContent>
 				</Collapse>

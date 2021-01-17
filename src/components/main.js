@@ -5,7 +5,7 @@ import LandingPage from './LandingPage';
 import AboutPage from './About';
 import ContactPage from './Contact';
 import ExperiencePage from './Experience';
-import ResumePage from './Resume';
+// import ResumePage from './Resume';
 
 const Main = () => (
     <React.Fragment>
@@ -15,7 +15,7 @@ const Main = () => (
           <Route path='/about' component={AboutPage} />
           <Route path='/contactme' component={ContactPage} />
           <Route path='/experience' component={ExperiencePage} />
-          <Route path='/resume' component={ResumePage} />
+          {/* <Route path='/resume' component={ResumePage} /> */}
         </Switch>
     </React.Fragment>
 )
